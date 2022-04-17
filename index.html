@@ -28,24 +28,23 @@
         <fieldset>
             <legend>Parameters</legend>
             <label>axis : 
-                <button>x</button>
-            <button>y</button>
+                <button class="btn active" id="x">x</button>
+            <button class="btn" id="y">y</button>
             </label>
         </br>
             <label>unit :
-                <button>px</button>
-                <button>vw</button>
-                <button>vh</button>
+                <button class="btn active" id="px">px</button>
+                <button class="btn" id="vw">vw</button>
             </label>
         </br>
             <label>width :
-                <input type="text" name="text" />
+                <input type="text" id="width" onkeypress="return onlyNumberKey(event)" name="text" />
             </label><br />
             <label>height :
-                <input type="text" name="text" />
+                <input type="text" id="height" onkeypress="return onlyNumberKey(event)" name="text" />
             </label>
         </br>
-            <button style="cursor:pointer; width:7rem; height:2.7rem; margin-top:1rem; background-color: #bcc4db; border:1px solid black; color:white;" type="submit">Render</button>
+            <button style="cursor:pointer; width:7rem; height:2.7rem; margin-top:1rem; background-color: #bcc4db; border:1px solid black; color:white;" id="submit" type="submit">Render</button>
         </fieldset>
         </form>
 
@@ -72,4 +71,12 @@
   </body>
 
   <script src="index.js"></script>
+  <script> function onlyNumberKey(evt) {
+          
+        // Only ASCII character in that range allowed
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+            return false;
+        return true;
+    }</script>
 </html>
