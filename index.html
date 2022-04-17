@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <header>
+        <div class="logo">
+            <div class="arrow-left"></div>
+            <h1>snap-carrousel-generator</h1>
+            <div class="arrow-right"></div>
+
+        </div>
+      
+      <p>I will create a slider only using css with scroll-snap !</p>
+    </header>
+
+    <main>
+    
+    <div class="top">
+        <div class="arrow-left"></div>
+                <form>
+        <fieldset>
+            <legend>Parameters</legend>
+            <label>axis : 
+                <button>x</button>
+            <button>y</button>
+            </label>
+        </br>
+            <label>unit :
+                <button>px</button>
+                <button>vw</button>
+                <button>vh</button>
+            </label>
+        </br>
+            <label>width :
+                <input type="text" name="text" />
+            </label><br />
+            <label>height :
+                <input type="text" name="text" />
+            </label>
+        </br>
+            <button style="cursor:pointer; width:7rem; height:2.7rem; margin-top:1rem; background-color: #bcc4db; border:1px solid black; color:white;" type="submit">Render</button>
+        </fieldset>
+        </form>
+
+        <section id="render">
+            <h2>HTML</h2>
+            <div class="html">
+                
+            </div>
+            <h2>CSS</h2>
+            <div class="css">
+                
+            </div>
+        </section>
+    </div>
+
+       
+
+    <section id="example">
+        <h2>Example</h2>
+    </section>
+        
+    </main>
+    
+  </body>
+
+  <script src="index.js"></script>
+</html>
