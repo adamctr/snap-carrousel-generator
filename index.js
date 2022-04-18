@@ -9,6 +9,12 @@ const width = document.getElementById("width");
 const height = document.getElementById("height");
 const html = document.querySelector(".html");
 const css = document.querySelector(".css");
+const exampleContent = document.querySelector(".example-content");
+const proximity = document.getElementById("proximity");
+const mandatory = document.getElementById("mandatory");
+const start = document.getElementById("start");
+const center = document.getElementById("center");
+const end = document.getElementById("end");
 
 // *** //
 
@@ -25,6 +31,9 @@ function checkIfActive(element) {
 function storeParametersInfos() {
   let axis = [x, y];
   let unit = [px, vw];
+  let style = [proximity, mandatory];
+  let align = [start, center, end];
+
   let parametersinfos = {};
 
   for (i = 0; i <= 1; i++) {
@@ -37,10 +46,20 @@ function storeParametersInfos() {
       parametersinfos.unit = unit[i];
     }
   }
+  for (i = 0; i <= 1; i++) {
+    if (checkIfActive(style[i])) {
+      parametersinfos.style = style[i];
+    }
+  }
+  for (i = 0; i <= 2; i++) {
+    if (checkIfActive(align[i])) {
+      parametersinfos.align = align[i];
+    }
+  }
 
   parametersinfos.width = width.value;
   parametersinfos.height = height.value;
-
+  console.log("Retour des paramètres...");
   return parametersinfos;
 }
 
@@ -48,7 +67,9 @@ function storeParametersInfos() {
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", (e) => {
+    console.log("Bouton cliqué!");
     e.preventDefault();
+    let align = [start, center, end];
 
     //Si déjà actif -> rien faire
     //Si pas actif -> enlever actif à celui qui l'est, et l'ajouté à celui cliqué.
@@ -63,11 +84,34 @@ for (var i = 0; i < buttons.length; i++) {
         case "vw":
           px.classList.toggle("active");
           vw.classList.toggle("active");
+          break;
+        case "proximity":
+        case "mandatory":
+          proximity.classList.toggle("active");
+          mandatory.classList.toggle("active");
+          break;
+      }
+
+      if (
+        !e.target.classList.contains("active") &&
+        (e.target.id == "start" ||
+          e.target.id == "center" ||
+          e.target.id == "end")
+      ) {
+        for (i = 0; i <= 2; i++) {
+          if (checkIfActive(align[i])) {
+            align[i].classList.toggle("active");
+          }
+        }
+        e.target.classList.toggle("active");
       }
     }
 
+    //Bouton Submit
+
     if (e.target.id === "submit") {
       if (width.value != "" && height.value != "") {
+        console.log("Rendu...");
         renderHTML();
         renderCSS();
       } else {
@@ -88,13 +132,19 @@ function renderHTML() {
     </div>`;
 
   html.textContent = htmlText;
+  console.log("Rendu HTML...");
+
+  return htmlText;
 }
 
 function renderCSS() {
   let parametersinfos = storeParametersInfos();
-  let { axis, unit, width, height } = parametersinfos;
+  let { axis, unit, width, height, style, align } = parametersinfos;
   axis = axis.id;
   unit = unit.id;
+  style = style.id;
+  align = align.id;
+
   soustraction = width - height;
   let cssText = ``;
 
@@ -112,7 +162,7 @@ function renderCSS() {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  scroll-snap-align: start;
+  scroll-snap-align: ${align};
   -webkit-transform: rotate(90deg) translateY(-${height}${unit});
           transform: rotate(90deg) translateY(-${height}${unit});
   -webkit-transform-origin: top left;
@@ -124,8 +174,8 @@ function renderCSS() {
 }
 
 .snap-slider {
-  -ms-scroll-snap-type: y mandatory;
-      scroll-snap-type: y mandatory;
+  -ms-scroll-snap-type: y ${style};
+      scroll-snap-type: y ${style};
   width: ${height}${unit};
   height: ${width}${unit};
   -webkit-transform: rotate(-90deg) translateX(-${height}${unit});
@@ -157,7 +207,25 @@ function renderCSS() {
   background: #8e8358;
 }
         `;
+  } else {
+    cssText = `.snap-slider {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-scroll-snap-type: y ${style};
+      scroll-snap-type: y ${style};
+  width: ${width}${unit};
+  height: ${height}${unit};
+}
 
-    css.textContent = cssText;
+.slide {
+  scroll-snap-align: ${align};
+  width: ${width}${unit};
+  height: ${height}${unit};
+  background-color: rgba(127, 255, 212, 0.267);
+}`;
   }
+  css.textContent = cssText;
+  console.log("Rendu CSS...");
+
+  return cssText;
 }

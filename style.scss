@@ -71,7 +71,6 @@ main {
 
 .top {
   width: 100%;
-  height: 100%;
   display: flex;
   border-top: 2px solid;
   padding: 2rem;
@@ -86,6 +85,7 @@ main {
     background-color: $parameters-bg;
     color: $parameters-letters;
     border-radius: 0.6rem;
+    margin-top: 4.5rem;
 
     & > fieldset {
       legend {
